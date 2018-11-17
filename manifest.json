@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Share to Telegram",
-  "version": "1.1",
+  "version": "1.2",
 
   "description": "Shares link with Telegram user of your choice via Telegram app.",
   "author": "Albicant",

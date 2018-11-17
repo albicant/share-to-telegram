@@ -1,4 +1,5 @@
-var shareToTelegramTabId = '';
+var shareToTelegramTabId = null;
+var curTabId = null;
 
 function shareToTelegram(data) {
     let shareToTelegramTab = browser.tabs.create({
@@ -12,11 +13,18 @@ function shareToTelegram(data) {
 function handleUpdated(tabId, changeInfo, tabInfo) {
     if(shareToTelegramTabId == tabId && tabInfo.status == "complete") {
         browser.tabs.remove(shareToTelegramTabId);
-        shareToTelegramTabId = '';
+        shareToTelegramTabId = null;
+        browser.tabs.update(
+            curTabId, {
+                active: true
+            }
+        );
+        curTabId = null;
     }
 }
 
 browser.browserAction.onClicked.addListener((currentTab) => {
-    shareToTelegram(currentTab.url)
+    curTabId = currentTab.id;
+    shareToTelegram(currentTab.url);
 });
 browser.tabs.onUpdated.addListener(handleUpdated);
